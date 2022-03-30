@@ -11,8 +11,8 @@ using WalletFunctions.Data;
 namespace WalletFunctions.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220327003416_shss")]
-    partial class shss
+    [Migration("20220330135005_shsh")]
+    partial class shsh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

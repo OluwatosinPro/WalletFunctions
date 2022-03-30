@@ -126,7 +126,10 @@ namespace WalletFunctions.Functions
             catch (Exception ex)
             {
                 log.LogError(ex.Message);
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+
+                var errorResult = new ObjectResult(ex.Message);
+                errorResult.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorResult;
             }
 
             return new OkObjectResult
@@ -173,7 +176,10 @@ namespace WalletFunctions.Functions
             catch (Exception ex)
             {
                 log.LogError(ex.Message);
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+
+                var errorResult = new ObjectResult(ex.Message);
+                errorResult.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorResult;
             }
 
             return new OkObjectResult

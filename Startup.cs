@@ -3,17 +3,19 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using WalletFunctions.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 [assembly: FunctionsStartup(typeof(WalletFunctions.Startup))]
 namespace WalletFunctions
 {
+    
     public class Startup : FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            //string connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
+            var connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
             builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
-                options.UseSqlServer("Data Source=ABOLUWARIN\\SQLEXPRESS;Initial Catalog=WalletDB;Integrated Security=True"));
+                options.UseSqlServer(connectionString));
 
             
             builder.Services.AddTransient<IWalletRepository, WalletRepository>();

@@ -4,7 +4,7 @@
 
 namespace WalletFunctions.Migrations
 {
-    public partial class shss : Migration
+    public partial class shsh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

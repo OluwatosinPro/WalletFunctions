@@ -1,6 +1,8 @@
 ﻿using WalletFunctions.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System;
+using Microsoft.Extensions.Configuration;
 
 namespace WalletFunctions.Data
 {
@@ -27,9 +29,18 @@ namespace WalletFunctions.Data
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            //string connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
+            /* Environment.GetEnvironmentVariable("SqlConnectionString") not working here, 
+             * so the below gotten from https://www.tomfaltesek.com/azure-functions-local-settings-json-and-source-control/ is used
+            */
+            var config = new ConfigurationBuilder()
+            //.SetBasePath(context.FunctionAppDirectory)
+            .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+            var connectionString = config["Values:SqlConnectionString"];
+
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer("Data Source=ABOLUWARIN\\SQLEXPRESS;Initial Catalog=WalletDB;Integrated Security=True");
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
